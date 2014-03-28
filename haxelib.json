@@ -1,0 +1,11 @@
+{
+  "name": "ios_appdelegate",
+  "url": "",
+  "license": "MIT",
+  "tags": [],
+  "description": "An interface for getting information from the iOS appdelegate, and for receiving callbacks.",
+  "version": "0.0.1",
+  "releasenote": "",
+  "contributors": ["GameDuell GmbH"],
+  "dependencies": { msignal }
+}
