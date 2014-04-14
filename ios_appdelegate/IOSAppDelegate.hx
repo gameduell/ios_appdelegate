@@ -16,8 +16,6 @@ class IOSAppDelegate
 
 		onMemoryWarning = new Signal0();
 		ios_appdelegate_set_memorywarningcallback(onMemoryWarning.dispatch);
-
-		return 0;
 	}
 
 	/// NATIVE ACCESS
