@@ -1,0 +1,4 @@
+<xml>
+		<compilerflag value="-I${haxelib:ios_appdelegate}/project/include" />
+</xml>
+

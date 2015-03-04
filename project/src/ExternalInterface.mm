@@ -1,3 +1,7 @@
+#ifndef STATIC_LINK
+#define IMPLEMENT_API
+#endif
+
 #include <hx/CFFI.h>
 #include "AppDelegateResponder.h"
 
@@ -30,11 +34,31 @@ static value ios_appdelegate_set_memorywarningcallback (value inCallback) {
 DEFINE_PRIM (ios_appdelegate_set_memorywarningcallback, 1);
 
 
+static value ios_appdelegate_set_willResignActiveCallback (value inCallback) {
+
+    [responder setWillResignActiveCallback:inCallback];
+	return alloc_null();
+
+}
+DEFINE_PRIM (ios_appdelegate_set_willResignActiveCallback, 1);
 
 
+static value ios_appdelegate_set_willEnterForegroundCallback (value inCallback) {
+
+    [responder setWillEnterForegroundCallback:inCallback];
+	return alloc_null();
+
+}
+DEFINE_PRIM (ios_appdelegate_set_willEnterForegroundCallback, 1);
 
 
+static value ios_appdelegate_set_willTerminateCallback (value inCallback) {
 
+    [responder setWillTerminateCallback:inCallback];
+	return alloc_null();
+
+}
+DEFINE_PRIM (ios_appdelegate_set_willTerminateCallback, 1);
 
 
 /// OTHER
