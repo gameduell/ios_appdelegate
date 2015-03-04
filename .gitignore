@@ -1,2 +1,5 @@
-project/obj
+tests/Export
+backends/filesystem_ios/ndll
+backends/filesystem_ios/project/obj
+.idea/
 *.iml

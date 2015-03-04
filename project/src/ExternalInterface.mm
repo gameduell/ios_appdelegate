@@ -14,7 +14,7 @@ static value ios_appdelegate_initialize () {
         [responder initialize];
     }
 
-	return alloc_int(0);
+	return alloc_null();
 	
 }
 DEFINE_PRIM (ios_appdelegate_initialize, 0);
@@ -24,7 +24,7 @@ DEFINE_PRIM (ios_appdelegate_initialize, 0);
 static value ios_appdelegate_set_memorywarningcallback (value inCallback) {
 	
     [responder setMemoryWarningCallback:inCallback];
-	return alloc_int(0);
+	return alloc_null();
 	
 }
 DEFINE_PRIM (ios_appdelegate_set_memorywarningcallback, 1);
