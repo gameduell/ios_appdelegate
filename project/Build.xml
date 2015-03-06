@@ -3,7 +3,9 @@
 	<include name="${HXCPP}/build-tool/BuildCommon.xml"/>
 	
 	<files id="src">
-		
+
+        <include name="${haxelib:duellbuildios}/native/native.xml" />
+
 		<compilerflag value="-Iinclude"/>
 		<file name="src/ExternalInterface.mm"/>
 		<file name="src/AppDelegateResponder.mm"/>

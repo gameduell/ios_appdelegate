@@ -30,7 +30,7 @@ class IOSAppDelegate
     public var onWillEnterForeground(default, null): Signal0;
 
     /**
-      * Dispatched when the app is about to terminate.
+      * Dispatched when the app is about to terminate. It is not called if your app is suspended.
     **/
     public var onWillTerminate(default, null): Signal0;
 

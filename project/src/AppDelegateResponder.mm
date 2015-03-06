@@ -4,6 +4,8 @@
  */
 #import "AppDelegateResponder.h"
 
+#import "DUELLAppDelegate.h"
+
 @interface AppDelegateResponder ()
 {
     AutoGCRoot *_memoryWarningCallback;
@@ -19,29 +21,14 @@
 
 - (void) initialize
 {
+    DUELLAppDelegate *appDelegate = (DUELLAppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    [appDelegate addDuellDelegate:self];
+
     /// Did receive memory warning
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(memoryWarning:)
                                                  name:UIApplicationDidReceiveMemoryWarningNotification 
-                                               object:nil];
-
-    /// Will Enter Background
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(willResignActive:)
-                                                 name:UIApplicationWillResignActiveNotification
-                                               object:nil];
-
-
-    /// Will Enter Foreground
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(willEnterForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
-
-    /// Will Terminate Application
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(willTerminate:)
-                                                 name:UIApplicationWillTerminateNotification
                                                object:nil];
 }
 
@@ -63,7 +50,7 @@
     _willResignActiveCallback = new AutoGCRoot(callback);
 }
 
-- (void) willResignActive:(NSNotification *)notification
+- (void)applicationWillResignActive:(UIApplication *)application
 {
     val_call0(_willResignActiveCallback->get());
 }
@@ -75,7 +62,7 @@
     _willEnterForegroundCallback = new AutoGCRoot(callback);
 }
 
-- (void) willEnterForeground:(NSNotification *)notification
+- (void)applicationWillEnterForeground:(UIApplication *)application
 {
     val_call0(_willEnterForegroundCallback->get());
 }
@@ -87,7 +74,7 @@
     _willTerminateCallback = new AutoGCRoot(callback);
 }
 
-- (void) willTerminate:(NSNotification *)notification
+- (void)applicationWillTerminate:(UIApplication *)application
 {
     val_call0(_willTerminateCallback->get());
 }

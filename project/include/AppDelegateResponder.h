@@ -5,13 +5,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import <DUELLDelegate.h>
+
 #ifndef STATIC_LINK
 #define IMPLEMENT_API
 #endif
 
 #include <hx/CFFI.h>
 
-@interface AppDelegateResponder : NSObject
+@interface AppDelegateResponder : NSObject <DUELLDelegate>
 
 - (void) initialize;
 - (void) setMemoryWarningCallback:(value)callback;
