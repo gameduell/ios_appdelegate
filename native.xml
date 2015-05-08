@@ -1,4 +1,4 @@
 <xml>
-		<compilerflag value="-I${haxelib:ios_appdelegate}/project/include" />
+		<compilerflag value="-I${haxelib:duell_ios_appdelegate}/project/include" />
 </xml>
 

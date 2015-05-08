@@ -4,7 +4,7 @@
 	
 	<files id="src">
 
-        <include name="${haxelib:duellbuildios}/native/native.xml" />
+        <include name="${haxelib:duell_duellbuildios}/native/native.xml" />
 
 		<compilerflag value="-Iinclude"/>
 		<file name="src/ExternalInterface.mm"/>
