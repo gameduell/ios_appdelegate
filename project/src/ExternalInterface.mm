@@ -77,6 +77,13 @@ static value ios_appdelegate_set_willEnterForegroundCallback (value inCallback) 
 }
 DEFINE_PRIM (ios_appdelegate_set_willEnterForegroundCallback, 1);
 
+static value ios_appdelegate_set_willEnterBackgroundCallback (value inCallback) {
+
+    [responder setWillEnteBackgroundCallback:inCallback];
+	return alloc_null();
+}
+DEFINE_PRIM (ios_appdelegate_set_willEnterBackgroundCallback, 1);
+
 
 static value ios_appdelegate_set_willTerminateCallback (value inCallback) {
 

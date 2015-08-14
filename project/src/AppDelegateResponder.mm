@@ -35,6 +35,7 @@
     AutoGCRoot *_willResignActiveCallback;
     AutoGCRoot *_willEnterForegroundCallback;
     AutoGCRoot *_willTerminateCallback;
+    AutoGCRoot *_willEnterBackgroundCallback;
 }
 
 @end
@@ -89,6 +90,20 @@
     val_call0(_willEnterForegroundCallback->get());
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    /*
+     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+     If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
+     */
+    val_call0(_willEnterBackgroundCallback->get());
+}
+
+/// Will Terminate Application
+- (void) setWillEnteBackgroundCallback:(value)callback
+{
+    _willEnterBackgroundCallback = new AutoGCRoot(callback);
+}
 
 /// Will Terminate Application
 - (void) setWillTerminateCallback:(value)callback

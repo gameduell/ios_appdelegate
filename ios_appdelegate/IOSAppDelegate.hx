@@ -32,6 +32,7 @@ import msignal.Signal;
 
 class IOSAppDelegate
 {
+    public var onWillEnterBackground(default, null): Signal0;
     /**
       * Dispatched when the app receives a warning from the operating system about low memory availability.
     **/
@@ -63,6 +64,7 @@ class IOSAppDelegate
     private var ios_appdelegate_set_willResignActiveCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willResignActiveCallback", 1);
     private var ios_appdelegate_set_willEnterForegroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterForegroundCallback", 1);
     private var ios_appdelegate_set_willTerminateCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willTerminateCallback", 1);
+    private var ios_appdelegate_set_willEnterBackgroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterBackgroundCallback", 1);
 
 	private function new(): Void
     {
@@ -70,6 +72,7 @@ class IOSAppDelegate
         onWillResignActive = new Signal0();
         onWillEnterForeground = new Signal0();
         onWillTerminate = new Signal0();
+        onWillEnterBackground = new Signal0();
 
 		ios_appdelegate_initialize();
 
@@ -77,6 +80,7 @@ class IOSAppDelegate
         ios_appdelegate_set_willResignActiveCallback(onWillResignActive.dispatch);
         ios_appdelegate_set_willEnterForegroundCallback(onWillEnterForeground.dispatch);
         ios_appdelegate_set_willTerminateCallback(onWillTerminate.dispatch);
+        ios_appdelegate_set_willEnterBackgroundCallback(onWillEnterBackground.dispatch);
 	}
 
 	static public inline function instance(): IOSAppDelegate
