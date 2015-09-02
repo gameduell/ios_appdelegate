@@ -57,9 +57,15 @@ class IOSAppDelegate
     **/
     public var onWillTerminate(default, null): Signal0;
 
+    /**
+      * Screen dimming enabling
+    **/
+    public var screenIdleTimerDisabled(default, set): Bool;
+
     static private var appDelegateInstance: IOSAppDelegate;
 
 	private var ios_appdelegate_initialize = Lib.load ("ios_appdelegate", "ios_appdelegate_initialize", 0);
+    private var ios_appdelegate_set_screenIdleTimerDisabled = Lib.load ("ios_appdelegate", "ios_appdelegate_set_screenIdleTimerDisabled", 1);
     private var ios_appdelegate_set_memorywarningcallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_memorywarningcallback", 1);
     private var ios_appdelegate_set_willResignActiveCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willResignActiveCallback", 1);
     private var ios_appdelegate_set_willEnterForegroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterForegroundCallback", 1);
@@ -73,6 +79,7 @@ class IOSAppDelegate
         onWillEnterForeground = new Signal0();
         onWillTerminate = new Signal0();
         onWillEnterBackground = new Signal0();
+        screenIdleTimerDisabled = false;
 
 		ios_appdelegate_initialize();
 
@@ -82,6 +89,13 @@ class IOSAppDelegate
         ios_appdelegate_set_willTerminateCallback(onWillTerminate.dispatch);
         ios_appdelegate_set_willEnterBackgroundCallback(onWillEnterBackground.dispatch);
 	}
+
+    private function set_screenIdleTimerDisabled(disabled: Bool): Bool
+    {
+        ios_appdelegate_set_screenIdleTimerDisabled(disabled);
+        screenIdleTimerDisabled = disabled;
+        return disabled;
+    }
 
 	static public inline function instance(): IOSAppDelegate
 	{
