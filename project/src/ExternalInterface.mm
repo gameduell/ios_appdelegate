@@ -49,6 +49,13 @@ static value ios_appdelegate_initialize () {
 }
 DEFINE_PRIM (ios_appdelegate_initialize, 0);
 
+static value ios_appdelegate_set_screenIdleTimerDisabled (value disabled) {
+
+    [[UIApplication sharedApplication] setIdleTimerDisabled:val_bool(disabled)];
+
+	return alloc_null();
+}
+DEFINE_PRIM (ios_appdelegate_set_screenIdleTimerDisabled, 1);
 
 /// CALLBACK SETTERS
 static value ios_appdelegate_set_memorywarningcallback (value inCallback) {
