@@ -49,6 +49,20 @@ static value ios_appdelegate_initialize () {
 }
 DEFINE_PRIM (ios_appdelegate_initialize, 0);
 
+static value ios_appdelegate_showSplashScreen () {
+
+    [responder showSplashScreen];
+	return alloc_null();
+}
+DEFINE_PRIM (ios_appdelegate_showSplashScreen, 0);
+
+static value ios_appdelegate_hideSplashScreen () {
+
+    [responder hideSplashScreen];
+	return alloc_null();
+}
+DEFINE_PRIM (ios_appdelegate_hideSplashScreen, 0);
+
 static value ios_appdelegate_set_screenIdleTimerDisabled (value disabled) {
 
     [[UIApplication sharedApplication] setIdleTimerDisabled:val_bool(disabled)];
@@ -65,7 +79,6 @@ static value ios_appdelegate_set_memorywarningcallback (value inCallback) {
 
 }
 DEFINE_PRIM (ios_appdelegate_set_memorywarningcallback, 1);
-
 
 static value ios_appdelegate_set_willResignActiveCallback (value inCallback) {
 

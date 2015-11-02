@@ -55,6 +55,18 @@
                                                object:nil];
 }
 
+- (void) showSplashScreen
+{
+    DUELLAppDelegate *appDelegate = (DUELLAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate showSplashScreen];
+}
+
+- (void) hideSplashScreen
+{
+    DUELLAppDelegate *appDelegate = (DUELLAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate hideSplashScreen];
+}
+
 /// Memory Warning
 - (void) setMemoryWarningCallback:(value)callback
 {

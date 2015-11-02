@@ -65,6 +65,8 @@ class IOSAppDelegate
     static private var appDelegateInstance: IOSAppDelegate;
 
 	private static var ios_appdelegate_initialize = Lib.load ("ios_appdelegate", "ios_appdelegate_initialize", 0);
+    private static var ios_appdelegate_showSplashScreen = Lib.load ("ios_appdelegate", "ios_appdelegate_showSplashScreen", 0);
+    private static var ios_appdelegate_hideSplashScreen = Lib.load ("ios_appdelegate", "ios_appdelegate_hideSplashScreen", 0);
     private static var ios_appdelegate_set_screenIdleTimerDisabled = Lib.load ("ios_appdelegate", "ios_appdelegate_set_screenIdleTimerDisabled", 1);
     private static var ios_appdelegate_set_memorywarningcallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_memorywarningcallback", 1);
     private static var ios_appdelegate_set_willResignActiveCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willResignActiveCallback", 1);
@@ -95,6 +97,16 @@ class IOSAppDelegate
         ios_appdelegate_set_screenIdleTimerDisabled(disabled);
         screenIdleTimerDisabled = disabled;
         return disabled;
+    }
+
+    public function showSplashScreen(): Void
+    {
+        ios_appdelegate_showSplashScreen();
+    }
+
+    public function hideSplashScreen(): Void
+    {
+        ios_appdelegate_hideSplashScreen();
     }
 
 	static public inline function instance(): IOSAppDelegate

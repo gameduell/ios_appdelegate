@@ -38,6 +38,8 @@
 @interface AppDelegateResponder : NSObject <DUELLDelegate>
 
 - (void) initialize;
+- (void) showSplashScreen;
+- (void) hideSplashScreen;
 - (void) setMemoryWarningCallback:(value)callback;
 
 - (void) setWillResignActiveCallback:(value)callback;
