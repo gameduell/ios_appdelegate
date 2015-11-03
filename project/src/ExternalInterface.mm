@@ -100,6 +100,27 @@ static value ios_appdelegate_set_willTerminateCallback (value inCallback) {
 }
 DEFINE_PRIM (ios_appdelegate_set_willTerminateCallback, 1);
 
+static value ios_appdelegate_get_remoteNotificationsEnabled()
+{
+    UIApplication *application = [UIApplication sharedApplication];
+
+    BOOL enabled;
+
+    // Try to use the newer isRegisteredForRemoteNotifications otherwise use the enabledRemoteNotificationTypes.
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        enabled = [application isRegisteredForRemoteNotifications];
+    }
+    else
+    {
+        UIRemoteNotificationType types = [application enabledRemoteNotificationTypes];
+        enabled = types & UIRemoteNotificationTypeAlert;
+    }
+    return alloc_bool(enabled);
+}
+DEFINE_PRIM(ios_appdelegate_get_remoteNotificationsEnabled,0);
+///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
 /// OTHER
 extern "C" void ios_appdelegate_main () {

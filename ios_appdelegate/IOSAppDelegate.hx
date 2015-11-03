@@ -62,6 +62,11 @@ class IOSAppDelegate
     **/
     public var screenIdleTimerDisabled(default, set): Bool;
 
+    /**
+       @return User setting of remote (push) notifications
+    */
+    public var remoteNotificationsEnabled(get, never): Bool;
+
     static private var appDelegateInstance: IOSAppDelegate;
 
 	private static var ios_appdelegate_initialize = Lib.load ("ios_appdelegate", "ios_appdelegate_initialize", 0);
@@ -71,6 +76,7 @@ class IOSAppDelegate
     private static var ios_appdelegate_set_willEnterForegroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterForegroundCallback", 1);
     private static var ios_appdelegate_set_willTerminateCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willTerminateCallback", 1);
     private static var ios_appdelegate_set_willEnterBackgroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterBackgroundCallback", 1);
+    private static var ios_appdelegate_get_remoteNotificationsEnabled = Lib.load ("ios_appdelegate", "ios_appdelegate_get_remoteNotificationsEnabled", 0);
 
 	private function new(): Void
     {
@@ -97,6 +103,11 @@ class IOSAppDelegate
         return disabled;
     }
 
+    private function get_remoteNotificationsEnabled(): Bool
+    {
+        return ios_appdelegate_get_remoteNotificationsEnabled();
+    }
+
 	static public inline function instance(): IOSAppDelegate
 	{
 		if(appDelegateInstance == null)
@@ -105,4 +116,5 @@ class IOSAppDelegate
 		}
 		return appDelegateInstance;
 	}
+
 }

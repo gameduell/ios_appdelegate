@@ -14,6 +14,10 @@ Simply retrieve the singleton ("instance()") and register on the signals provide
 
 ## Release Log
 
+### 2.3.0
+
+- Added property to get remoteNotificationsEnabled setting
+
 ### 2.0.0
 
 New iOS build plugin compatibility
