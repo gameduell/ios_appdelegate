@@ -42,6 +42,7 @@
 
 - (void) setWillResignActiveCallback:(value)callback;
 - (void) setWillEnterForegroundCallback:(value)callback;
+- (void) setWillEnterBackgroundCallback:(value)callback;
 - (void) setWillTerminateCallback:(value)callback;
 
 @end

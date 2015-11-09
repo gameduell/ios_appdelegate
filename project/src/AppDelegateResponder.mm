@@ -100,7 +100,7 @@
 }
 
 /// Will Terminate Application
-- (void) setWillEnteBackgroundCallback:(value)callback
+- (void) setWillEnterBackgroundCallback:(value)callback
 {
     _willEnterBackgroundCallback = new AutoGCRoot(callback);
 }
