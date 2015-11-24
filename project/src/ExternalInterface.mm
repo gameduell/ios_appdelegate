@@ -75,6 +75,13 @@ static value ios_appdelegate_set_willResignActiveCallback (value inCallback) {
 }
 DEFINE_PRIM (ios_appdelegate_set_willResignActiveCallback, 1);
 
+static value ios_appdelegate_openUrl (value url)
+{
+    NSString *urlString = [NSString stringWithCString:val_get_string(url) encoding:NSUTF8StringEncoding];
+    return alloc_bool([responder openUrl:urlString]);
+}
+DEFINE_PRIM (ios_appdelegate_openUrl, 1);
+
 
 static value ios_appdelegate_set_willEnterForegroundCallback (value inCallback) {
 

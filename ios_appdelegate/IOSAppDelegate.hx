@@ -76,6 +76,7 @@ class IOSAppDelegate
     private static var ios_appdelegate_set_willEnterForegroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterForegroundCallback", 1);
     private static var ios_appdelegate_set_willTerminateCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willTerminateCallback", 1);
     private static var ios_appdelegate_set_willEnterBackgroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterBackgroundCallback", 1);
+    private static var ios_appdelegate_openUrl = Lib.load ("ios_appdelegate", "ios_appdelegate_openUrl", 1);
     private static var ios_appdelegate_get_remoteNotificationsEnabled = Lib.load ("ios_appdelegate", "ios_appdelegate_get_remoteNotificationsEnabled", 0);
 
 	private function new(): Void
@@ -95,6 +96,13 @@ class IOSAppDelegate
         ios_appdelegate_set_willTerminateCallback(onWillTerminate.dispatch);
         ios_appdelegate_set_willEnterBackgroundCallback(onWillEnterBackground.dispatch);
 	}
+    //
+    // native calls
+    //
+    public function openURL(url:String): Bool
+    {
+        return ios_appdelegate_openUrl(url);
+    }
 
     private function set_screenIdleTimerDisabled(disabled: Bool): Bool
     {

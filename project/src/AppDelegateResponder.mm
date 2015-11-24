@@ -78,6 +78,11 @@
     val_call0(_willResignActiveCallback->get());
 }
 
+- (BOOL)openUrl:(NSString *)url
+{
+   return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
+
 
 /// Will Enter Foreground
 - (void) setWillEnterForegroundCallback:(value)callback
