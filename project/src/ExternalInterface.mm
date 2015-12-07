@@ -109,6 +109,12 @@ DEFINE_PRIM (ios_appdelegate_set_willTerminateCallback, 1);
 
 static value ios_appdelegate_get_remoteNotificationsEnabled()
 {
+    #ifdef APPLETV
+
+    return alloc_bool(false);
+
+    #else
+
     UIApplication *application = [UIApplication sharedApplication];
 
     BOOL enabled;
@@ -124,6 +130,8 @@ static value ios_appdelegate_get_remoteNotificationsEnabled()
         enabled = types & UIRemoteNotificationTypeAlert;
     }
     return alloc_bool(enabled);
+
+    #endif
 }
 DEFINE_PRIM(ios_appdelegate_get_remoteNotificationsEnabled,0);
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
