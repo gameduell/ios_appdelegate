@@ -67,6 +67,20 @@ class IOSAppDelegate
     */
     public var remoteNotificationsEnabled(get, never): Bool;
 
+    /**
+      * If the app was opened due to a remote notification, this property stores the payload in json format.
+      * The field is null if the app was opened normally.
+      * https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/TheNotificationPayload.html
+    */
+    public var lastRemoteNotificationPayload(default, null): String = null;
+
+    /**
+      * Dispatched when the app received a remote notification.
+      * The payload property stores the last notification payload.
+      * This signal could dispatch in background. You should not trigger heavy duty tasks on this.
+    **/
+    public var onReceivedRemoteNotification(default, null): Signal0;
+
     static private var appDelegateInstance: IOSAppDelegate;
 
 	private static var ios_appdelegate_initialize = Lib.load ("ios_appdelegate", "ios_appdelegate_initialize", 0);
@@ -76,6 +90,7 @@ class IOSAppDelegate
     private static var ios_appdelegate_set_willEnterForegroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterForegroundCallback", 1);
     private static var ios_appdelegate_set_willTerminateCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willTerminateCallback", 1);
     private static var ios_appdelegate_set_willEnterBackgroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterBackgroundCallback", 1);
+    private static var ios_appdelegate_set_remoteNotificationCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_remoteNotificationCallback", 1);
     private static var ios_appdelegate_openUrl = Lib.load ("ios_appdelegate", "ios_appdelegate_openUrl", 1);
     private static var ios_appdelegate_get_remoteNotificationsEnabled = Lib.load ("ios_appdelegate", "ios_appdelegate_get_remoteNotificationsEnabled", 0);
 
@@ -86,7 +101,9 @@ class IOSAppDelegate
         onWillEnterForeground = new Signal0();
         onWillTerminate = new Signal0();
         onWillEnterBackground = new Signal0();
+        onReceivedRemoteNotification = new Signal0();
         screenIdleTimerDisabled = false;
+        lastRemoteNotificationPayload = null;
 
 		ios_appdelegate_initialize();
 
@@ -95,7 +112,8 @@ class IOSAppDelegate
         ios_appdelegate_set_willEnterForegroundCallback(onWillEnterForeground.dispatch);
         ios_appdelegate_set_willTerminateCallback(onWillTerminate.dispatch);
         ios_appdelegate_set_willEnterBackgroundCallback(onWillEnterBackground.dispatch);
-	}
+        ios_appdelegate_set_remoteNotificationCallback(assign_remoteNotificationPayload);
+    }
     //
     // native calls
     //
@@ -114,6 +132,12 @@ class IOSAppDelegate
     private function get_remoteNotificationsEnabled(): Bool
     {
         return ios_appdelegate_get_remoteNotificationsEnabled();
+    }
+
+    private function assign_remoteNotificationPayload(payload: String): Void
+    {
+        lastRemoteNotificationPayload = payload;
+        onReceivedRemoteNotification.dispatch();
     }
 
 	static public inline function instance(): IOSAppDelegate

@@ -36,6 +36,7 @@
     AutoGCRoot *_willEnterForegroundCallback;
     AutoGCRoot *_willTerminateCallback;
     AutoGCRoot *_willEnterBackgroundCallback;
+    AutoGCRoot *_remoteNotificationCallback;
 }
 
 @end
@@ -53,6 +54,12 @@
                                              selector:@selector(memoryWarning:)
                                                  name:UIApplicationDidReceiveMemoryWarningNotification
                                                object:nil];
+
+   [[NSNotificationCenter defaultCenter] addObserver:self
+                                                selector:@selector(applicationDidFinishLaunchingNotification:)
+                                                    name:UIApplicationDidFinishLaunchingNotification
+                                                  object:nil];
+
 }
 
 /// Memory Warning
@@ -122,6 +129,81 @@
 }
 
 
+/// UIApplicationDidFinishLaunchingNotification
+- (void) applicationDidFinishLaunchingNotification:(NSNotification *)notification
+{
+     // This code will be called immediately after application:didFinishLaunchingWithOptions:.
+    NSDictionary *launchOptions = [notification userInfo];
+    [self processLaunchOptions: launchOptions];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
+{
+    [self processLaunchOptions: userInfo];
+    handler(UIBackgroundFetchResultNoData);
+}
+
+- (void) processLaunchOptions:(NSDictionary *)launchOptions
+{
+    // UILocalNotification *localNotification = [launchOptions objectForKey: @"UIApplicationLaunchOptionsLocalNotificationKey"];
+
+    NSDictionary *remoteNotification = [launchOptions objectForKey: @"UIApplicationLaunchOptionsRemoteNotificationKey"];
+
+    //if (localNotification)
+    //{
+        // TODO Convert to JSON String
+        // TODO Call the assignment callback for local notifications
+        // TODO
+    //}
+
+    if (remoteNotification)
+    {
+        NSString *remoteJSON = [self convertNSDictionaryToJSONString: remoteNotification];
+
+        if (remoteJSON)
+        {
+            NSLog(@"AppDelegateResponder: Received Remote Notification");
+            val_call1(_remoteNotificationCallback->get(), alloc_string(remoteJSON.UTF8String));
+        }
+        else
+        {
+            val_call1(_remoteNotificationCallback->get(), alloc_null());
+        }
+    }
+}
+
+- (NSString*) convertNSDictionaryToJSONString:(NSDictionary *) dict
+{
+     NSError *error;
+     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                   options:0
+                                                     error:&error];
+
+     if (!jsonData)
+     {
+        NSLog(@"convertNSDictionaryToJSONString: error: %@", error.localizedDescription);
+        return nil;
+     }
+     else
+     {
+        return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+     }
+ }
+
+
+/// Remote Notification
+- (void) setRemoteNotificationCallback:(value)callback
+{
+    _remoteNotificationCallback = new AutoGCRoot(callback);
+}
+
+
+
+
+
+
+
+
 - (void) dealloc
 {
     delete _memoryWarningCallback;
@@ -129,6 +211,7 @@
     delete _willResignActiveCallback;
     delete _willEnterForegroundCallback;
     delete _willTerminateCallback;
+    delete _remoteNotificationCallback;
 
     [super dealloc];
 }

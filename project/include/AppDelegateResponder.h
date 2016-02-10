@@ -44,5 +44,6 @@
 - (void) setWillEnterForegroundCallback:(value)callback;
 - (void) setWillEnterBackgroundCallback:(value)callback;
 - (void) setWillTerminateCallback:(value)callback;
+- (void) setRemoteNotificationCallback:(value)callback;
 
 @end

@@ -107,6 +107,20 @@ static value ios_appdelegate_set_willTerminateCallback (value inCallback) {
 }
 DEFINE_PRIM (ios_appdelegate_set_willTerminateCallback, 1);
 
+
+
+
+static value ios_appdelegate_set_remoteNotificationCallback (value inCallback) {
+
+    [responder setRemoteNotificationCallback:inCallback];
+	return alloc_null();
+
+}
+DEFINE_PRIM (ios_appdelegate_set_remoteNotificationCallback, 1);
+
+
+
+
 static value ios_appdelegate_get_remoteNotificationsEnabled()
 {
     #ifdef APPLETV
