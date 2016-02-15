@@ -81,6 +81,18 @@ class IOSAppDelegate
     **/
     public var onReceivedRemoteNotification(default, null): Signal0;
 
+    /**
+      * If the app was opened from another app, this property stores the url used to open this app.
+      * The field is null if the app was opened normally.
+    */
+    public var lastURLFromApplicationOpening(default, null): String = null;
+
+    /**
+      * Dispatched when the app is opened from another app.
+    **/
+    public var onApplicationDidOpenWithURL(default, null): Signal0;
+
+
     static private var appDelegateInstance: IOSAppDelegate;
 
 	private static var ios_appdelegate_initialize = Lib.load ("ios_appdelegate", "ios_appdelegate_initialize", 0);
@@ -91,6 +103,7 @@ class IOSAppDelegate
     private static var ios_appdelegate_set_willTerminateCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willTerminateCallback", 1);
     private static var ios_appdelegate_set_willEnterBackgroundCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_willEnterBackgroundCallback", 1);
     private static var ios_appdelegate_set_remoteNotificationCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_remoteNotificationCallback", 1);
+    private static var ios_appdelegate_set_applicationDidOpenWithURLCallback = Lib.load ("ios_appdelegate", "ios_appdelegate_set_applicationDidOpenWithURLCallback", 1);
     private static var ios_appdelegate_openUrl = Lib.load ("ios_appdelegate", "ios_appdelegate_openUrl", 1);
     private static var ios_appdelegate_get_remoteNotificationsEnabled = Lib.load ("ios_appdelegate", "ios_appdelegate_get_remoteNotificationsEnabled", 0);
 
@@ -102,8 +115,10 @@ class IOSAppDelegate
         onWillTerminate = new Signal0();
         onWillEnterBackground = new Signal0();
         onReceivedRemoteNotification = new Signal0();
+        onApplicationDidOpenWithURL = new Signal0();
         screenIdleTimerDisabled = false;
         lastRemoteNotificationPayload = null;
+        lastURLFromApplicationOpening = null;
 
 		ios_appdelegate_initialize();
 
@@ -113,6 +128,7 @@ class IOSAppDelegate
         ios_appdelegate_set_willTerminateCallback(onWillTerminate.dispatch);
         ios_appdelegate_set_willEnterBackgroundCallback(onWillEnterBackground.dispatch);
         ios_appdelegate_set_remoteNotificationCallback(assign_remoteNotificationPayload);
+        ios_appdelegate_set_applicationDidOpenWithURLCallback(assign_applicationOpeningURL);
     }
     //
     // native calls
@@ -138,6 +154,12 @@ class IOSAppDelegate
     {
         lastRemoteNotificationPayload = payload;
         onReceivedRemoteNotification.dispatch();
+    }
+
+    private function assign_applicationOpeningURL(url: String): Void
+    {
+        lastURLFromApplicationOpening = url;
+        onApplicationDidOpenWithURL.dispatch();
     }
 
 	static public inline function instance(): IOSAppDelegate

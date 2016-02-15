@@ -45,5 +45,6 @@
 - (void) setWillEnterBackgroundCallback:(value)callback;
 - (void) setWillTerminateCallback:(value)callback;
 - (void) setRemoteNotificationCallback:(value)callback;
+- (void) setApplicationDidOpenWithURLCallback:(value)callback;
 
 @end

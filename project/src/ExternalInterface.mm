@@ -120,6 +120,18 @@ DEFINE_PRIM (ios_appdelegate_set_remoteNotificationCallback, 1);
 
 
 
+static value ios_appdelegate_set_applicationDidOpenWithURLCallback (value inCallback) {
+
+    [responder setApplicationDidOpenWithURLCallback:inCallback];
+	return alloc_null();
+
+}
+DEFINE_PRIM (ios_appdelegate_set_applicationDidOpenWithURLCallback, 1);
+
+
+
+
+
 
 static value ios_appdelegate_get_remoteNotificationsEnabled()
 {

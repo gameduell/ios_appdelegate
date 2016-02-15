@@ -37,6 +37,7 @@
     AutoGCRoot *_willTerminateCallback;
     AutoGCRoot *_willEnterBackgroundCallback;
     AutoGCRoot *_remoteNotificationCallback;
+    AutoGCRoot *_applicationDidOpenWithURLCallback;
 }
 
 @end
@@ -129,12 +130,20 @@
 }
 
 
-/// UIApplicationDidFinishLaunchingNotification
+/// Remote Notification
+- (void) setRemoteNotificationCallback:(value)callback
+{
+    _remoteNotificationCallback = new AutoGCRoot(callback);
+}
+
 - (void) applicationDidFinishLaunchingNotification:(NSNotification *)notification
 {
      // This code will be called immediately after application:didFinishLaunchingWithOptions:.
     NSDictionary *launchOptions = [notification userInfo];
-    [self processLaunchOptions: launchOptions];
+    if (launchOptions)
+    {
+        [self processLaunchOptions: launchOptions];
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
@@ -145,16 +154,16 @@
 
 - (void) processLaunchOptions:(NSDictionary *)launchOptions
 {
-    // UILocalNotification *localNotification = [launchOptions objectForKey: @"UIApplicationLaunchOptionsLocalNotificationKey"];
-
+    UILocalNotification *localNotification = [launchOptions objectForKey: @"UIApplicationLaunchOptionsLocalNotificationKey"];
     NSDictionary *remoteNotification = [launchOptions objectForKey: @"UIApplicationLaunchOptionsRemoteNotificationKey"];
+    //NSString *sourceApplicationURL = [launchOptions objectForKey: @"UIApplicationLaunchOptionsSourceApplicationKey"];
 
-    //if (localNotification)
-    //{
-        // TODO Convert to JSON String
-        // TODO Call the assignment callback for local notifications
-        // TODO
-    //}
+    if (localNotification)
+    {
+         //TODO Convert to JSON String
+         //TODO Call the assignment callback for local notifications
+         //TODO
+    }
 
     if (remoteNotification)
     {
@@ -191,17 +200,38 @@
  }
 
 
-/// Remote Notification
-- (void) setRemoteNotificationCallback:(value)callback
+/// Application Open URL
+
+- (void) setApplicationDidOpenWithURLCallback:(value)callback;
 {
-    _remoteNotificationCallback = new AutoGCRoot(callback);
+    _applicationDidOpenWithURLCallback = new AutoGCRoot(callback);
 }
 
+// iOS 8.0 and before
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+//    // URL is myapp://discount-scheme/id304
+//    if ([url.scheme isEqualToString:@"myapp"]) {
+//        if ([url.relativePath isEqualToString:@"/id304"]) {
+//            // Handle deep link in app. Do something inside your app.
+//            [MyApp doSomething];
+//        }
+//    }
 
+    NSString *urlAsString = [url absoluteString];
+    val_call1(_applicationDidOpenWithURLCallback->get(), alloc_string(urlAsString.UTF8String));
+    return YES;
+}
 
-
-
-
+// From iOS 9.0
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<NSString *,id> *)options
+{
+    NSString *urlAsString = [url absoluteString];
+    val_call1(_applicationDidOpenWithURLCallback->get(), alloc_string(urlAsString.UTF8String));
+    return YES;
+}
 
 
 - (void) dealloc
@@ -212,6 +242,7 @@
     delete _willEnterForegroundCallback;
     delete _willTerminateCallback;
     delete _remoteNotificationCallback;
+    delete _applicationDidOpenWithURLCallback;
 
     [super dealloc];
 }
