@@ -210,14 +210,6 @@
 // iOS 8.0 and before
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-//    // URL is myapp://discount-scheme/id304
-//    if ([url.scheme isEqualToString:@"myapp"]) {
-//        if ([url.relativePath isEqualToString:@"/id304"]) {
-//            // Handle deep link in app. Do something inside your app.
-//            [MyApp doSomething];
-//        }
-//    }
-
     NSString *urlAsString = [url absoluteString];
     val_call1(_applicationDidOpenWithURLCallback->get(), alloc_string(urlAsString.UTF8String));
     return YES;

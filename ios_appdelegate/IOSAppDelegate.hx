@@ -84,6 +84,8 @@ class IOSAppDelegate
     /**
       * If the app was opened from another app, this property stores the url used to open this app.
       * The field is null if the app was opened normally.
+      *
+      * https://developer.apple.com/library/ios/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#//apple_ref/doc/uid/TP40007072-CH6-SW10
     */
     public var lastURLFromApplicationOpening(default, null): String = null;
 
